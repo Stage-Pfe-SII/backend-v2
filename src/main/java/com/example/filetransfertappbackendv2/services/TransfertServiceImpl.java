@@ -5,6 +5,7 @@ import com.example.filetransfertappbackendv2.entities.Transfert;
 import com.example.filetransfertappbackendv2.repositories.TransfertRepository;
 import lombok.RequiredArgsConstructor;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,16 +25,24 @@ public class TransfertServiceImpl implements TransfertSercvice{
 
     @Override
     public Transfert findByPath(String path) {
-        return null;
+        return transfertRepository.findByPath(path);
     }
 
     @Override
+    @Transactional
     public Transfert addFilesToTransfert(Transfert transfert, List<File> files) {
-        return null;
+        files.forEach(file -> {
+            file.setPath(transfert.getPath());
+            file.setTransfert(transfert);
+            transfert.getFiles().add(file);
+        });
+        return transfert;
     }
 
     @Override
+    @Transactional
     public Transfert incrementDownloadTime(Transfert transfert) {
-        return null;
+        transfert.setDownloadTimes(transfert.getDownloadTimes() + 1);
+        return transfert;
     }
 }

@@ -1,11 +1,11 @@
 package com.example.filetransfertappbackendv2.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.AUTO;
@@ -30,4 +30,8 @@ public class Transfert {
     @ManyToOne
     private User receiver;
 
+
+    @OneToMany(mappedBy = "transfert", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("transfert")
+    private Collection<File> files = new ArrayList<>();
 }
