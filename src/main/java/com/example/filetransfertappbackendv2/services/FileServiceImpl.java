@@ -4,10 +4,12 @@ import com.example.filetransfertappbackendv2.entities.File;
 import com.example.filetransfertappbackendv2.entities.Transfert;
 import com.example.filetransfertappbackendv2.repositories.FileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @RequiredArgsConstructor
+@Service
 public class FileServiceImpl implements FileService{
 
     private final FileRepository fileRepository;
