@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class TransfertServiceImpl implements TransfertSercvice{
+public class TransfertServiceImpl implements TransfertService {
 
     private final TransfertRepository transfertRepository;
 

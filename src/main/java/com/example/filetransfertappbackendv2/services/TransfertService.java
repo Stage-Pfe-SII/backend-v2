@@ -5,7 +5,7 @@ import com.example.filetransfertappbackendv2.entities.Transfert;
 
 import java.util.List;
 
-public interface TransfertSercvice {
+public interface TransfertService {
     Transfert save(Transfert transfert);
     List<Transfert> getAllTransferts();
     Transfert findByPath(String path);
