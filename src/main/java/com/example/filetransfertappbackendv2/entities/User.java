@@ -26,6 +26,7 @@ public class User {
     private String username;
     private String password;
 
+    private String email;
     @OneToMany(mappedBy="sender")
     @JsonIgnoreProperties({"sender","receiver"})
     Collection<Transfert> sendedTransferts = new ArrayList<>();

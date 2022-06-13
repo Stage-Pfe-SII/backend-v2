@@ -40,7 +40,6 @@ public class UploadController {
         try {
 
             List<File> files = multipartFileListToFileList(multipartFiles);
-            System.out.println(files.toString());
             TransfertDto trans = new ObjectMapper().readValue(transfertJSON, TransfertDto.class);
             User sender = userService.findUserbyEmail(trans.getSender());
             User receiver = userService.findUserbyEmail(trans.getReceiver());

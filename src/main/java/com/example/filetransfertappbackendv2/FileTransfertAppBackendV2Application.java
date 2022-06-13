@@ -20,8 +20,8 @@ public class FileTransfertAppBackendV2Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User user1 = new User(null,"mohammedaminerabhi17@gmail.com","password",null,null);
-        User user2 = new User(null,"mohammedaminerabhi20@gmail.com","password",null,null);
+        User user1 = new User(null,"mohammedaminerabhi17@gmail.com","password","mohammedaminerabhi17@gmail.com",null,null);
+        User user2 = new User(null,"mohammedaminerabhi20@gmail.com","password","mohammedaminerabhi20@gmail.com",null,null);
 
         userService.save(user1);
         userService.save(user2);

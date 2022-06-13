@@ -50,10 +50,16 @@ public class TransfertServiceImpl implements TransfertSercvice{
         return transfert;
     }
 
+
     @Override
     @Transactional
     public Transfert incrementDownloadTime(Transfert transfert) {
         transfert.setDownloadTimes(transfert.getDownloadTimes() + 1);
         return transfert;
+    }
+
+    @Override
+    public Transfert getTransfertById(Long id) {
+        return transfertRepository.findById(id).get();
     }
 }

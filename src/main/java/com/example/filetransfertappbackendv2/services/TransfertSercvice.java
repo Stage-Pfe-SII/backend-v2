@@ -11,4 +11,5 @@ public interface TransfertSercvice {
     Transfert findByPath(String path);
     Transfert addFilesToTransfert(Transfert transfert, List<File> files);
     Transfert incrementDownloadTime(Transfert transfert);
+    Transfert getTransfertById(Long id);
 }
