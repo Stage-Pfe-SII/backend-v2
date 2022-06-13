@@ -43,7 +43,8 @@ public class TransfertServiceImpl implements TransfertService {
     @Transactional
     public Transfert addFilesToTransfert(Transfert transfert, List<File> files) {
         files.forEach(file -> {
-            file.setPath(transfert.getPath());
+            String path = UUID.randomUUID().toString();
+            file.setPath(path);
             file.setTransfert(transfert);
             transfert.getFiles().add(file);
         });
