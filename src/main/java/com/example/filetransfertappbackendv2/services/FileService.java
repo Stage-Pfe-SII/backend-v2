@@ -8,5 +8,5 @@ import java.util.List;
 public interface FileService {
     File save(File file);
     List<File> findByTransfert(Transfert transfert);
-    List<File> findByPath(String path);
+    File findByPath(String path);
 }

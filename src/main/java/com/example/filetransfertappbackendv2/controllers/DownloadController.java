@@ -3,6 +3,7 @@ package com.example.filetransfertappbackendv2.controllers;
 import com.example.filetransfertappbackendv2.entities.File;
 import com.example.filetransfertappbackendv2.entities.Transfert;
 import com.example.filetransfertappbackendv2.excpetions.TransfertNotFoundException;
+import com.example.filetransfertappbackendv2.services.FileService;
 import com.example.filetransfertappbackendv2.services.TransfertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,7 @@ import java.util.zip.ZipOutputStream;
 public class DownloadController {
 
     private final TransfertService transfertService;
+    private final FileService fileService;
 
     @GetMapping("/download/{path}")
     public void downloadZipFile(@PathVariable String path, HttpServletResponse response)throws Exception{
@@ -35,7 +37,7 @@ public class DownloadController {
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
         response.setContentType("application/zip");
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"file.zip\"");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"transfert.zip\"");
         transfertService.incrementDownloadTime(transfert);
         files.forEach(file -> {
             ZipEntry entry = new ZipEntry(file.getName());
@@ -48,6 +50,30 @@ public class DownloadController {
                 throw new RuntimeException(e);
             }
         });
+        zipOutputStream.close();
+    }
+
+
+    @GetMapping("/download/file/{path}")
+    public void downloadFile(@PathVariable String path, HttpServletResponse response)throws Exception{
+        File file = fileService.findByPath(path);
+        Transfert transfert = file.getTransfert();
+        ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
+        response.setContentType("application/zip");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"file.zip\"");
+        transfertService.incrementDownloadTime(transfert);
+
+        ZipEntry entry = new ZipEntry(file.getName());
+            entry.setSize(file.getSize());
+            try {
+                zipOutputStream.putNextEntry(entry);
+                StreamUtils.copy(file.getContent(), zipOutputStream);
+                zipOutputStream.closeEntry();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         zipOutputStream.close();
     }
 }

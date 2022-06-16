@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -26,7 +25,7 @@ public class FileServiceImpl implements FileService{
     }
 
     @Override
-    public List<File> findByPath(String path) {
+    public File findByPath(String path) {
         return fileRepository.findByPath(path);
     }
 }

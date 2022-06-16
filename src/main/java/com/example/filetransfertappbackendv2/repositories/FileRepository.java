@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface FileRepository extends JpaRepository<File, Long> {
     List<File> findByTransfert(Transfert transfert);
-    List<File> findByPath(String path);
+    File findByPath(String path);
 }
