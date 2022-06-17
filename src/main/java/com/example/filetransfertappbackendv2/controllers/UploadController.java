@@ -6,9 +6,7 @@ import com.example.filetransfertappbackendv2.entities.File;
 import com.example.filetransfertappbackendv2.entities.Transfert;
 import com.example.filetransfertappbackendv2.entities.User;
 import com.example.filetransfertappbackendv2.mapper.TransfertMapper;
-import com.example.filetransfertappbackendv2.services.FileService;
-import com.example.filetransfertappbackendv2.services.TransfertServiceImpl;
-import com.example.filetransfertappbackendv2.services.UserService;
+import com.example.filetransfertappbackendv2.services.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +25,12 @@ import static com.example.filetransfertappbackendv2.mapper.MultipartFileToFileMa
 @CrossOrigin("*")
 public class UploadController {
 
-    private final TransfertServiceImpl transfertService;
+    private final TransfertService transfertService;
     private final FileService fileService;
     private final UserService userService;
     private final TransfertMapper transfertMapper;
+    private final EmailService emailService;
+
 
     @PostMapping("/upload")
     public void upload(
@@ -50,8 +50,10 @@ public class UploadController {
             transfertService.addFilesToTransfert(transfert,files);
             transfert.setMessage(trans.getMessage());
             transfert.setTitle(trans.getTitle());
-
             transfertService.save(transfert);
+
+            emailService.sendToSender(transfert);
+            emailService.sendToReceiver(transfert);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();

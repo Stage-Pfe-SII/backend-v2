@@ -2,6 +2,8 @@ package com.example.filetransfertappbackendv2.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +13,8 @@ import java.util.Date;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Transfert {
     @Id
     @GeneratedValue(strategy = AUTO)
