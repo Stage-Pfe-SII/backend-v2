@@ -30,6 +30,7 @@ public class UploadController {
     private final UserService userService;
     private final TransfertMapper transfertMapper;
     private final EmailService emailService;
+    private final EncryptionService encryptionService;
 
 
     @PostMapping("/upload")
@@ -41,6 +42,13 @@ public class UploadController {
 
             List<File> files = multipartFileListToFileList(multipartFiles);
             TransfertDto trans = new ObjectMapper().readValue(transfertJSON, TransfertDto.class);
+            files.forEach(file -> {
+                try {
+                    encryptionService.encrypt(file);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
             User sender = userService.findUserbyEmail(trans.getSender());
             User receiver = userService.findUserbyEmail(trans.getReceiver());
 

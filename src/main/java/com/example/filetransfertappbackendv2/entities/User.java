@@ -35,4 +35,6 @@ public class User {
     @JsonIgnoreProperties({"sender","receiver"})
     Collection<Transfert> receivedTranferts = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    Collection<Role> roles = new ArrayList<>();
 }

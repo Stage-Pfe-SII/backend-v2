@@ -3,6 +3,7 @@ package com.example.filetransfertappbackendv2.controllers;
 import com.example.filetransfertappbackendv2.entities.File;
 import com.example.filetransfertappbackendv2.entities.Transfert;
 import com.example.filetransfertappbackendv2.excpetions.TransfertNotFoundException;
+import com.example.filetransfertappbackendv2.services.EncryptionService;
 import com.example.filetransfertappbackendv2.services.FileService;
 import com.example.filetransfertappbackendv2.services.TransfertService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class DownloadController {
 
     private final TransfertService transfertService;
     private final FileService fileService;
+    private final EncryptionService encryptionService;
 
     @GetMapping("/download/{path}")
     public void downloadZipFile(@PathVariable String path, HttpServletResponse response)throws Exception{
@@ -33,7 +35,15 @@ public class DownloadController {
         if(transfert == null){
             throw new TransfertNotFoundException("the transfert with the path "+path+" does not exist");
         }
+
         List<File> files = (List<File>) transfert.getFiles();
+        files.forEach(file -> {
+            try {
+                encryptionService.decrypt(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
         response.setContentType("application/zip");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -57,7 +67,13 @@ public class DownloadController {
     @GetMapping("/download/file/{path}")
     public void downloadFile(@PathVariable String path, HttpServletResponse response)throws Exception{
         File file = fileService.findByPath(path);
+
         Transfert transfert = file.getTransfert();
+        try {
+            encryptionService.decrypt(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
         response.setContentType("application/zip");
         response.setStatus(HttpServletResponse.SC_OK);

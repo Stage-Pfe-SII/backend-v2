@@ -9,4 +9,5 @@ public interface UserService {
     List<User> getAllUsers();
     User findUserById(Long id);
     User findUserbyEmail(String email);
+    void addRoleToUser(String username, String roleName);
 }
