@@ -62,7 +62,8 @@ public class EmailServiceImpl implements EmailService {
                                     .collect(Collectors.toList());
         context.setVariable("sender", transfert.getSender().getEmail());
         context.setVariable("numberOfItems", transfert.getFiles().size());
-        context.setVariable("size", 0);
+        int size = transfert.getFiles().stream().mapToInt(file -> (int) file.getSize()).sum();
+        context.setVariable("size", size);
         context.setVariable("dateOfExpressing", date);
         context.setVariable("path", transfert.getPath());
         context.setVariable("names", nameOfFiles);

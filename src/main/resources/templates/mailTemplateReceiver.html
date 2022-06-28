@@ -29,14 +29,15 @@
 
     <tr>
         <td>
-            <div style="color: #6A6D70;font-size: 14px;text-align: center;padding: 20px;"><span th:text="${numberOfItems}"></span> item</span> item<span th:if="${numberOfItems}!=1">s</span>, <span th:text="${size}"></span>MB. Expiré le <span th:text="${dateOfExpressing}"></span> </div>
+            <div style="color: #6A6D70;font-size: 14px;text-align: center;padding: 20px;">
+                <span th:text="${numberOfItems}"></span>item<span th:if="${numberOfItems}!=1">s</span>, Expiré le <span th:text="${dateOfExpressing}"></span> </div>
         </td>
     </tr>
 
     <tr style="padding: 30px;">
         <td>
             <div style="margin: 0 auto;height: auto;width: fit-content;">
-                <a th:href="@{https://localhost:8080/download/{paths} (paths=${path})}"
+                <a th:href="@{https://localhost:8443/download/{paths} (paths=${path})}"
                    style="text-decoration:none;display:inline-block;background-color: #409FFF;border-radius: 30px;padding: 15px 20px;color: #fff;"
                 >télécharger les fichiers</a>
             </div>
